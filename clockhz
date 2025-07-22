@@ -1,0 +1,57 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date:    16:24:21 07/03/2025 
+-- Design Name: 
+-- Module Name:    clcok2hz - Behavioral 
+-- Project Name: 
+-- Target Devices: 
+-- Tool versions: 
+-- Description: 
+--
+-- Dependencies: 
+--
+-- Revision: 
+-- Revision 0.01 - File Created
+-- Additional Comments: 
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity clcok2hz is
+    Port ( clk : in  STD_LOGIC;
+           rst : in  STD_LOGIC;
+           clock2hz : out  STD_LOGIC);
+end clcok2hz;
+
+architecture Behavioral of clcok2hz is
+
+	signal tmp : std_logic:='0' ;
+	signal div : integer range 0 to 12499999:=0 ;
+
+begin
+
+		process (clk,rst,tmp,div)
+		begin
+			if (rst = '0') then
+				tmp <= '0' ;
+				div <= 0 ;
+			else 
+				if (rising_edge(clk)) then
+					if (div = 12499999) then
+						tmp <= not tmp ;
+						div <= 0 ;
+					else 
+						tmp <= tmp ;
+						div <= div + 1 ;
+					end if ;
+				end if ;
+			end if ;
+		end process ;
+		
+		clock2hz <= tmp ;
+
+end Behavioral;
+
